@@ -1,0 +1,23 @@
+SIZE 4 4
+START 2 1
+
+ROOM 2 1 Cryo_Bay
+DESC You awaken in a dim cryo bay. Frost clings to the sleeping pods.
+
+ROOM 1 1 Central_Corridor
+DESC A narrow corridor runs through the ship, lit by flickering emergency lights.
+
+ROOM 0 1 Bridge
+DESC Dead control panels line the bridge, and stars shine through the forward viewport.
+
+ROOM 1 0 Engine_Room
+DESC The reactor chamber vibrates with a deep metallic hum.
+
+ROOM 1 2 Med_Bay
+DESC Medical cabinets hang open and overturned carts drift slightly in low gravity.
+
+ROOM 2 2 Cargo_Hold
+DESC Cargo containers are strapped to the deck, though some have broken loose.
+
+ROOM 2 3 Airlock
+DESC A thick outer hatch stands beside a rack of emergency suits.
