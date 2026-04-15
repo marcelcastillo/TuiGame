@@ -2,6 +2,7 @@
 
 #include "entities.h"
 
+/*****************************/
 /* Entity Method Definitions */
 Entity::Entity(const string& name, const string& description)
 {
@@ -22,6 +23,15 @@ void Entity::display() const
     cout << entDesc << endl;
 }
 
+/*****************************/
+/* Player Method Definitions */
+Player::Player(const string& name, const string& description) : Entity(name, description)
+{
+    Entity* crowbar = new Entity("crowbar", "Pry things open!");
+    inventory.push_back(crowbar);
+}
+
+/***************************/
 /* Room Method Definitions */
 Room::Room(const string& name, const string& description, int row, int col)
 {
@@ -54,6 +64,7 @@ void Room::display() const
     cout << "Row: " << coords.gridRow << " Col: " << coords.gridCol << endl;
 }
 
+/******************************/
 /* GameMap Method Definitions */
 
 //@brief gameMap class constructor.
@@ -89,7 +100,7 @@ GameMap::GameMap(string filename)
         }
         else if (keyword == "START")
         {
-            lineStream >> startRow >> startCol;
+            lineStream >> startLoc.gridRow >> startLoc.gridCol;
         }
         else if (keyword == "ROOM")
         {
@@ -110,10 +121,15 @@ GameMap::GameMap(string filename)
         }
     }
 
-    /* Populate adjacency list */
+    /* Populate adjacency lists */
     for (Room* room : roomList)
     {
-        vector<Room*> adj = adjRooms(*room);
+        vector<Room*> adj = populateAdjDict(*room);
+        for (Room* adjRoom : adj)
+        {
+            if (adjRoom != nullptr)
+                adjList[room].push_back(adjRoom);
+        }
         adjDict[room] = adj;
     }
 }
@@ -136,7 +152,7 @@ bool GameMap::inBounds(Coords coords)
 
 
 //@brief Displays all rooms comprising game map
-void GameMap::displayRooms()
+void GameMap::displayAllRooms()
 {
     for (Room* room : roomList)
     {
@@ -150,7 +166,7 @@ void GameMap::displayRooms()
 }
 //@brief Returns the rooms adjacent to the current Room ref
 // adj List is always [up, down, left, right] with nullptrs for invalid directions or nonexistent rooms
-vector<Room*> GameMap::adjRooms(Room& currRoom)
+vector<Room*> GameMap::populateAdjDict(Room& currRoom)
 {
     vector<Room*> adjRooms;
     auto coords = currRoom.getCoords();
@@ -171,4 +187,38 @@ vector<Room*> GameMap::adjRooms(Room& currRoom)
     }
 
     return adjRooms;
+}
+
+//@brief Returns the roomPtr assigned to a given grid coordinate
+//@return Room* if room exists, else nullptr
+Room* GameMap::getRoom(Coords coords) const
+{
+    return gridMap[coords.gridRow][coords.gridCol];
+}
+
+//@brief Returns the roomPtr assigned to the given index in adjDict
+//@return Room* if room exists, else nullptr
+Room* GameMap::getRoom(Room* currRoom, int adjIndex)
+{
+    return adjDict[currRoom][adjIndex];
+}
+
+Room* GameMap::getStart() const
+{
+    return gridMap[startLoc.gridRow][startLoc.gridCol];
+}
+
+void GameMap::displayAdjRooms(Room* currRoom)
+{   
+    int count = 0;
+    for (Room* adjRoom : adjList[currRoom])
+    {
+        cout << "   " << count + 1 << ": " << adjRoom->getName() << endl;
+        count++;
+    }
+}
+
+vector<Room*> GameMap::getAdjList(Room* currRoom)
+{
+    return adjList[currRoom];
 }

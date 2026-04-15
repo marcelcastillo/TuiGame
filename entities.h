@@ -8,9 +8,7 @@
 #include <string>
 #include <map>
 #include <vector>
-#include <algorithm>
 #include <sstream>
-#include <tuple>
 
 using namespace std;
 
@@ -34,6 +32,16 @@ private:
     health playerHP = 100.0;
     vector<Entity*> inventory;
 public:
+    Player(const string& name, const string& description);
+};
+
+class Enemy : public Entity
+{
+private:
+    health enemyHP = 50.0;
+    vector<Entity*> loot;
+public:
+
 };
 
 struct Coords
@@ -64,17 +72,24 @@ private:
     vector<Room*> roomList;
     vector<vector<Room*>> gridMap;  //2D Grid of Rooms
     map<Room*, vector<Room*>> adjDict;  // Mapping from Room* -> Adjacent Rooms
+                                        // [up, down, left, right]
+    map<Room*, vector<Room*>> adjList;  // Mapping from Room* -> Adjacent Rooms
+                                        // Only accessible rooms
+    Coords startLoc;
     int rows;
     int cols;
-    int startRow;
-    int startCol;
 
 public:
     GameMap(string filename);
     ~GameMap();
     bool inBounds(Coords coords);
-    void displayRooms();
-    vector<Room*> adjRooms(Room&);
+    vector<Room*> populateAdjDict(Room&);
+    vector<Room*> getAdjList(Room*);
+    Room* getRoom(Coords) const;
+    Room* getRoom(Room*, int);
+    Room* getStart() const;
+    void displayAdjRooms(Room*);
+    void displayAllRooms();
 };
 
 class GameState
