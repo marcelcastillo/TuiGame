@@ -1,92 +1,46 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <map>
-#include <vector>
-#include <algorithm>
-#include <sstream>
+/* Main Program */
 
+#include "entities.h"
 
 using namespace std;
 
-class gameMap
-{
-private:
-    vector<Room*> roomStorage;
-    vector<vector<Room*>> map;  //2D Grid of Rooms
-    int rows;
-    int cols;
-    int startRow;
-    int startCol;
-
-public:
-    gameMap(string filename)
-    {
-        ifstream file(filename);
-        if (!file)
-        {
-            cout << "Could not open map.txt. Aborting program." << endl;
-            exit(EXIT_FAILURE);
-        }
-    }
-};
-
-class Room
-{
-private:
-    std::string roomName;
-    std::string roomDesc;
-    int gridRow;
-    int gridCol;
-public:
-    Room(const string& name, const string& description, int row, int col)
-    {
-        roomName = name;
-        roomDesc = description;
-        gridRow = row;
-        gridCol = col;
-    }
-
-    const string& getName() const
-    {
-        return roomName;
-    }
-
-    const string& getDescription() const
-    {
-        return roomDesc;
-    }
-
-    void setDescription(const string& desc)
-    {
-        roomDesc = desc;
-    }
-
-    void display() const
-    {
-        cout << "\n" << roomName << endl;
-        cout << roomDesc << endl;
-    }
-
-};
-
-bool inBounds(int row, int col, int rows, int cols)
-{
-
-}
-
-
-
-
 int main()
 {
-    string filename;
+    string mapfile = "map.txt";
+    string savedGames = "games.txt";
+    bool proceed = false;
+    int choice;
 
-    cout << "Welcome to Tork!"
-    // Main Game Loop
+    cout << "Welcome to Tork!" << endl;
+
+    while (!proceed)
+    {   
+        cout << "   Press 1 to start a new game." << endl;
+        cout << "   Press 2 to continue an existing game." << endl;
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                /* TODO */
+                proceed = true;
+                break;
+            case 2:
+                /* TODO */
+                proceed = true;
+                break;
+            default:
+                cout << "Invalid option." << endl;
+                break;
+        }
+    }
+    cout << "Reading from " << mapfile << endl;
+    GameMap map = GameMap(mapfile);
+  
+    /* Main Game Loop */
     while (true)
     {
-
+        break;
     }
     return 0;
 }
