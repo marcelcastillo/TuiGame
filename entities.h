@@ -13,11 +13,32 @@
 
 using namespace std;
 
+class Entity
+{
+private:
+    string entName;
+    string entDesc;
+public:
+    Entity(const string& name, const string& description);
+    const string& getName() const;
+    const string& getDescription() const;
+    void display() const;
+};
+
+using health = double;
+class Player : public Entity
+{
+private:
+    health playerHP = 100.0;
+    vector<Entity*> inventory;
+public:
+};
+
 class Room
 {
 private:
-    std::string roomName;
-    std::string roomDesc;
+    string roomName;
+    string roomDesc;
     int gridRow;
     int gridCol;
 public:
@@ -44,10 +65,11 @@ public:
     void displayRooms();
 };
 
-class SavedGame
+class GameState
 {
 private:
     GameMap* gamemap;
+
 public:
 
 };

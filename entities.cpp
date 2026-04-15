@@ -2,6 +2,26 @@
 
 #include "entities.h"
 
+/* Entity Method Definitions */
+Entity::Entity(const string& name, const string& description)
+{
+    entName = name;
+    entDesc = description;
+}
+const string& Entity::getName() const
+{
+    return entName;
+}
+const string& Entity::getDescription() const
+{
+    return entDesc;
+}
+void Entity::display() const
+{
+    cout << "\n" << entName << endl;
+    cout << entDesc << endl;
+}
+
 /* Room Method Definitions */
 Room::Room(const string& name, const string& description, int row, int col)
 {
