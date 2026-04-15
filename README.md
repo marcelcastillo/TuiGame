@@ -2,5 +2,5 @@
 A text-based game in C++ for EE 553 Final Project
 
 To compile, simply:
-g++ main.cpp entities.cpp entities.h
+g++ *.cpp
 

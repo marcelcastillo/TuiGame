@@ -1,6 +1,7 @@
 /* Main Program */
 
 #include "entities.h"
+#include "systems.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ int main()
     while (!proceed)
     {   
         cout << "   Press 1 to start a new game." << endl;
-        cout << "   Press 2 to continue an existing game." << endl;
+        cout << "   Press 2 to continue an existing game: ";
         cin >> choice;
 
         switch (choice)
@@ -34,13 +35,44 @@ int main()
                 break;
         }
     }
+    /* Initialize game map */
     cout << "Reading from " << mapfile << endl;
-    GameMap map = GameMap(mapfile);
-    map.displayRooms();
+    GameMap* map = new GameMap(mapfile);
+    // map.displayAllRooms();
+
+    /* Initialize Player & Movement System */
+    char choice2;
+    proceed = false;
+    string playerName;
+
+    while (!proceed)
+    {
+        cout << "Enter a name for your player: ";
+        cin >> playerName;
+        cout << "Are you sure you want to proceed with " << playerName << "? (y/n): ";
+        cin >> choice2;
+
+        switch (choice2)
+        {
+            case 'y':
+                cout << "Welcome aboard the USS Athena, " << playerName << "!" << endl;
+                proceed = true;
+                break;
+            case 'n':
+                break;
+            default:
+                cout << "Invalid option." << endl;
+                break;
+        }
+
+    }
+    Player* player = new Player(playerName, "Voyager on the USS Artemis.");
+    SysMovement* moveSys = new SysMovement(map, player);
+
     /* Main Game Loop */
     while (true)
     {
-        break;
+        moveSys->movePlayer();
     }
     return 0;
 }
