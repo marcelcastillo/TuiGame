@@ -36,7 +36,7 @@ int main()
     }
     cout << "Reading from " << mapfile << endl;
     GameMap map = GameMap(mapfile);
-  
+    map.displayRooms();
     /* Main Game Loop */
     while (true)
     {

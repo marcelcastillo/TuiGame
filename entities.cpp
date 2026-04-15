@@ -27,17 +27,22 @@ Room::Room(const string& name, const string& description, int row, int col)
 {
     roomName = name;
     roomDesc = description;
-    gridRow = row;
-    gridCol = col;
+    coords.gridRow = row;
+    coords.gridCol = col;
 }
 const string& Room::getName() const
 {
     return roomName;
 }
+const Coords& Room::getCoords() const
+{
+    return coords;
+}
 const string& Room::getDescription() const
 {
     return roomDesc;
 }
+
 void Room::setDescription(const string& desc)
 {
     roomDesc = desc;
@@ -46,13 +51,14 @@ void Room::display() const
 {
     cout << "\n" << roomName << endl;
     cout << roomDesc << endl;
-    cout << "Row: " << gridRow << " Col: " << gridCol << endl;
+    cout << "Row: " << coords.gridRow << " Col: " << coords.gridCol << endl;
 }
 
 /* GameMap Method Definitions */
 
 //@brief gameMap class constructor.
-// Reads the mapfile 'map.txt', creates each Room obj
+// Reads the mapfile 'map.txt', creates each Room obj, push into roomList and correct gridMap location
+// Populates room adjacency list
 GameMap::GameMap(string filename)
 {   
     Room* currRoom;
@@ -65,6 +71,7 @@ GameMap::GameMap(string filename)
         exit(EXIT_FAILURE);
     }
     
+    /* Populate the roomList and the GridMap*/
     while (getline(file, line))     // Single line from map.txt
     {
         if (line.empty()) continue;
@@ -78,7 +85,7 @@ GameMap::GameMap(string filename)
         if (keyword == "SIZE")
         {
             lineStream >> rows >> cols;
-            map.resize(rows, vector<Room*>(cols, nullptr));
+            gridMap.resize(rows, vector<Room*>(cols, nullptr)); // Set the map grid to all nullptrs
         }
         else if (keyword == "START")
         {
@@ -92,6 +99,7 @@ GameMap::GameMap(string filename)
             for (char& ch : roomName) 
                 if (ch == '_') ch = ' ';                    // Replace '_' with ' ' in roomName
             currRoom = new Room(roomName, "", row, col);    // Create pointer to new room to reference later
+            gridMap[row][col] = currRoom;                   // Insert the roomPtr into the gridmap
             roomList.push_back(currRoom);
         }
         else if (keyword == "DESC")
@@ -101,17 +109,66 @@ GameMap::GameMap(string filename)
             currRoom->setDescription(desc);
         }
     }
+
+    /* Populate adjacency list */
+    for (Room* room : roomList)
+    {
+        vector<Room*> adj = adjRooms(*room);
+        adjDict[room] = adj;
+    }
 }
-//@brief Checks whether provided dimensions fit within grid
-//@return bool
-bool GameMap::inBounds(int row, int col)
+//@brief GameMap Destructor
+GameMap::~GameMap()
 {
-    return row >= 0 && row < rows && col >= 0 && col < cols;
+    for (Room* room : roomList)
+    {
+        delete room;
+    }
+    roomList.clear();
 }
+
+//@brief Checks whether provided coordinates fit within grid
+//@return bool
+bool GameMap::inBounds(Coords coords)
+{
+    return coords.gridRow >= 0 && coords.gridRow < rows && coords.gridCol >= 0 && coords.gridCol < cols;
+}
+
 
 //@brief Displays all rooms comprising game map
 void GameMap::displayRooms()
 {
     for (Room* room : roomList)
+    {
         room->display();
+        for (Room* adjRoom : adjDict[room])
+        {
+            if (adjRoom != nullptr) cout << adjRoom->getName() << endl;
+        }
+    }
+
+}
+//@brief Returns the rooms adjacent to the current Room ref
+// adj List is always [up, down, left, right] with nullptrs for invalid directions or nonexistent rooms
+vector<Room*> GameMap::adjRooms(Room& currRoom)
+{
+    vector<Room*> adjRooms;
+    auto coords = currRoom.getCoords();
+    /* Four possible directions */
+    Coords up = {coords.gridRow - 1, coords.gridCol};
+    Coords down = {coords.gridRow + 1, coords.gridCol};
+    Coords left = {coords.gridRow, coords.gridCol - 1};
+    Coords right = {coords.gridRow, coords.gridCol + 1};
+    vector<Coords> directions = {up, down, left, right};
+
+    for (auto& dir : directions)
+    {
+        if (inBounds(dir))
+        {
+            // Pushes in room
+            adjRooms.push_back(gridMap[dir.gridRow][dir.gridCol]);
+        }
+    }
+
+    return adjRooms;
 }
