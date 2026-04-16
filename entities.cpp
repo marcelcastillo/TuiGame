@@ -165,7 +165,8 @@ void GameMap::displayAllRooms()
 
 }
 //@brief Returns the rooms adjacent to the current Room ref
-// adj List is always [up, down, left, right] with nullptrs for invalid directions or nonexistent rooms
+// adj List is always [up, down, left, right] with nullptrs for invalid directions or nonexistent rooms.
+// It is not yet clear if the adjDict will be necessary
 vector<Room*> GameMap::populateAdjDict(Room& currRoom)
 {
     vector<Room*> adjRooms;
