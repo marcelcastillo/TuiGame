@@ -12,6 +12,7 @@
 
 using namespace std;
 
+class Event;
 class Entity
 {
 private:
@@ -70,7 +71,7 @@ class GameMap
 {
 public:
     vector<Room*> roomList;
-    vector<vector<Room*>> gridMap;  //2D Grid of Rooms
+    vector<vector<Room*>> gridMap;      //2D Grid of Rooms
     map<Room*, vector<Room*>> adjDict;  // Mapping from Room* -> Adjacent Rooms
                                         // [up, down, left, right]
     map<Room*, vector<Room*>> adjList;  // Mapping from Room* -> Adjacent Rooms
@@ -79,7 +80,7 @@ public:
     int rows;
     int cols;
 
-    GameMap(string filename);
+    GameMap();
     ~GameMap();
     bool inBounds(Coords coords);
     vector<Room*> populateAdjDict(Room&);

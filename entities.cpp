@@ -70,69 +70,8 @@ void Room::display() const
 //@brief gameMap class constructor.
 // Reads the mapfile 'map.txt', creates each Room obj, push into roomList and correct gridMap location
 // Populates room adjacency list
-GameMap::GameMap(string filename)
-{   
-    Room* currRoom;
-    ifstream file(filename);
-    string line;
-
-    if (!file)
-    {
-        cout << "Could not open map.txt. Aborting program." << endl;
-        exit(EXIT_FAILURE);
-    }
-    
-    /* Populate the roomList and the GridMap*/
-    while (getline(file, line))     // Single line from map.txt
-    {
-        if (line.empty()) continue;
-
-        istringstream lineStream(line);
-        string keyword;
-        vector<string> lineVec;
-        lineStream >> keyword;      // Get the keyword from each line
-
-        /* Parse through mapfile contents */
-        if (keyword == "SIZE")
-        {
-            lineStream >> rows >> cols;
-            gridMap.resize(rows, vector<Room*>(cols, nullptr)); // Set the map grid to all nullptrs
-        }
-        else if (keyword == "START")
-        {
-            lineStream >> startLoc.gridRow >> startLoc.gridCol;
-        }
-        else if (keyword == "ROOM")
-        {
-            int row, col;
-            string roomName;
-            lineStream >> row >> col >> roomName;
-            for (char& ch : roomName) 
-                if (ch == '_') ch = ' ';                    // Replace '_' with ' ' in roomName
-            currRoom = new Room(roomName, "", row, col);    // Create pointer to new room to reference later
-            gridMap[row][col] = currRoom;                   // Insert the roomPtr into the gridmap
-            roomList.push_back(currRoom);
-        }
-        else if (keyword == "DESC")
-        {
-            string desc;
-            getline(lineStream >> std::ws, desc);
-            currRoom->setDescription(desc);
-        }
-    }
-
-    /* Populate adjacency lists */
-    for (Room* room : roomList)
-    {
-        vector<Room*> adj = populateAdjDict(*room);
-        for (Room* adjRoom : adj)
-        {
-            if (adjRoom != nullptr)
-                adjList[room].push_back(adjRoom);
-        }
-        adjDict[room] = adj;
-    }
-}
+GameMap::GameMap()
+{}
 //@brief GameMap Destructor
 GameMap::~GameMap()
 {
@@ -165,7 +104,8 @@ void GameMap::displayAllRooms()
 
 }
 //@brief Returns the rooms adjacent to the current Room ref
-// adj List is always [up, down, left, right] with nullptrs for invalid directions or nonexistent rooms.
+// Returned adjList is always [up, down, left, right] with nullptrs for 
+// invalid directions or nonexistent rooms.
 // It is not yet clear if the adjDict will be necessary
 vector<Room*> GameMap::populateAdjDict(Room& currRoom)
 {
@@ -184,6 +124,8 @@ vector<Room*> GameMap::populateAdjDict(Room& currRoom)
         {
             // Pushes in room
             adjRooms.push_back(gridMap[dir.gridRow][dir.gridCol]);
+        } else {
+            adjRooms.push_back(nullptr);
         }
     }
 

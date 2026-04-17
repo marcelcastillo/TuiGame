@@ -48,31 +48,95 @@ void SysMovement::announce() const
     ostream << currRoom->getDescription();
     slowPrint(ostream);
 }
-
-/* Event Methods */
-SysEvents::SysEvents()
+Room* SysMovement::getCurrRoom()
 {
-    
+    return currRoom;
+}
+
+/* Event System Methods */
+SysEvents::SysEvents()
+{}
+
+/* Populate each event's preReq vector with the events matched by ID*/
+void SysEvents::linkPreReqs()
+{
+    for (Event* event : eventList)
+    {
+        event->preReqs.clear();
+        for (int reqId : event->preReqsIds)
+        {
+            for (Event* possibleMatch : eventList)
+            {
+                if (possibleMatch->id == reqId)
+                {
+                    event->preReqs.push_back(possibleMatch);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+void SysEvents::processEvents(SysMovement* moveSys)
+{
+    Room* currRoom = moveSys->getCurrRoom();
+    for (Event* event : eventMap[currRoom])
+    {
+        // If the player enters the current room, and there's an associated event with no outstanding prereqs:
+        if (event->complete)
+            continue;
+        bool start = true;
+        for (Event* preReq : event->preReqs)
+        {
+            if (!preReq->complete)
+            {
+                start = false;
+                break;
+            }
+        }
+        if (start)
+        {
+            event->startEvent();
+        }
+
+    }
+
+}
+
+void SysEvents::printEvents()
+{
+    for (Event* event : eventList)
+    {
+        event->printEvent();
+    }  
 }
 
 
 /* Slowprint Function */
-void slowPrint(const ostringstream& stream, int delay_ms)
+void slowPrint(const string& text, int delay_ms)
 {
-    string text = stream.str();
     for (char c : text)
     {
-        cout << c << flush;  // print immediately
+        cout << c << flush;
         this_thread::sleep_for(chrono::milliseconds(delay_ms));
     }
     cout << endl;
 }
+
+void slowPrint(const ostringstream& stream, int delay_ms)
+{
+    slowPrint(stream.str(), delay_ms);
+}
+
+
 
 //@brief Initialization function.
 // Reads the filename and populates the game map and event list
 void init(string filename, GameMap* map, SysEvents* eventSys)
 {
     Room* currRoom;
+    Event* currEvent;
+    Task* currTask;
     ifstream file(filename);
     string line;
 
@@ -82,7 +146,7 @@ void init(string filename, GameMap* map, SysEvents* eventSys)
         exit(EXIT_FAILURE);
     }
 
-        /* Populate the roomList and the GridMap*/
+    /* Populate the roomList and the GridMap*/
     while (getline(file, line))     // Single line from map.txt
     {
         if (line.empty()) continue;
@@ -116,14 +180,61 @@ void init(string filename, GameMap* map, SysEvents* eventSys)
         else if (keyword == "DESC")
         {
             string desc;
-            getline(lineStream >> std::ws, desc);
+            getline(lineStream >> std::ws, desc);   // Discard leading whitespace
             currRoom->setDescription(desc);
         }
+        else if (keyword == "EVNT")
+        {
+            currEvent = new Event(); 
+            lineStream >> currEvent->id;                        // Set event id
+            currEvent->room = currRoom;
+            getline(lineStream >> std::ws, currEvent->name);    // Discard leading whitespace, set event name     
+
+        }
+        else if (keyword == "PREQ") 
+        {
+            vector<int> preReqList;                             // List of pre requisite events
+            int preReqID;                                       // Event ID
+            while (lineStream >> preReqID)          // Build PreReq list            
+                preReqList.push_back(preReqID);
+            currEvent->preReqsIds = preReqList;        // Assign to the event
+        }
+        else if (keyword == "TASK")
+        {
+            currTask = new Task();
+            getline(lineStream >> ws, currTask->prompt);
+            currEvent->taskList.push_back(currTask);
+        }
+        else if (keyword == "CHOI")
+        {
+            if (currEvent != nullptr)
+            {
+                string choiceText;
+                getline(lineStream >> std::ws, choiceText);
+                currTask->choices.push_back({choiceText, ""});
+            }
+        }
+        else if (keyword == "RESP")
+        {
+            string respText;
+            getline(lineStream >> std::ws, respText);
+            currTask->choices.back().second = respText;
+
+        }
+        else if (keyword == "ANSW")
+        {
+            lineStream >> currTask->answer;
+            eventSys->eventList.push_back(currEvent);
+            eventSys->eventMap[currRoom].push_back(currEvent);
+        }
     }
+    /* Populate the Event's preReq vector */
+    eventSys->linkPreReqs();
 
     /* Populate adjacency lists */
     for (Room* room : map->roomList)
-    {
+    {   
+        // adj contains every possible direction
         vector<Room*> adj = map->populateAdjDict(*room);
         for (Room* adjRoom : adj)
         {
@@ -133,3 +244,4 @@ void init(string filename, GameMap* map, SysEvents* eventSys)
         map->adjDict[room] = adj;
     }
 }
+
