@@ -8,12 +8,12 @@ EVNT 1 Cryopod_Initialization
 PREQ
 TASK Welcome back, Captain. I am Co-Pilot, your assigned onboard AI system for the ISV Athena. My programming is designed to monitor and maintain ship functionality, mission progress, and crew wellbeing. You are currently assigned to Athena Expedition-07, part of the Hestia Project. This expedition is one of multiple concurrent missions under the Hestia Project. I will assist you with task management, hazard alerts, and system updates. How may I assist you?
 CHOI What is the Athena Expedition?
-RESP You are on Mission Day 452 of the Athena Expedition-07. Your objective is to travel to Planet Eos (HX-317b) and evaluate its potential for human colonization. Earth can no longer sustain current population demands. The Hestia Project was established to identify viable alternatives for human settlement. Preliminary data indicates that Planet Eos may support human life. Your role is to confirm these findings through direct observation.
-CHOI No questions. Proceed to daily tasks.
+RESP You are assigned to Athena Expedition-07, part of the Hestia Project—humanity’s final effort to identify viable worlds for colonization following Earth’s environmental collapse. The ISV Athena is tasked with surveying Planet Eos (HX-317b), a candidate world believed to support human life. You are currently on Mission Day 452. Your role as Captain is to confirm planetary habitability through direct observation and authorize colonization protocols if conditions are met. Be advised: previous expeditions have reported inconsistencies with preliminary scan data. All findings must be verified upon arrival. The success of this mission may determine the future of human civilization.
+CHOI No questions. Proceed with the mission brief.
 RESP Understood. Proceeding to mission briefing.
 ANSW 1
 
-TASK Do you require any additional clarification?
+TASK You are on Mission Day 452 of the Athena Expedition-07. Your objective is to travel to Planet Eos (HX-317b) and evaluate its potential for human colonization. Earth can no longer sustain current population demands. The Hestia Project was established to identify viable alternatives for human settlement. Preliminary data indicates that Planet Eos may support human life. Your role is to confirm these findings through direct observation. Do you require any additional clarification?
 CHOI What should I be doing right now?
 RESP Your current schedule includes standard daily operations. Recommended tasks include system diagnostics, mission log review, and routine health monitoring.
 CHOI No further questions.
