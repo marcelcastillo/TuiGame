@@ -38,6 +38,8 @@ int main()
     /* Initialize game map */
     cout << "Reading from " << mapfile << endl;
     GameMap* map = new GameMap(mapfile);
+    SysEvents* eventSys = new SysEvents();
+    init(mapfile, map, eventSys);
     // map.displayAllRooms();
 
     /* Initialize Player & Movement System */

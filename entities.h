@@ -68,7 +68,7 @@ public:
 
 class GameMap
 {
-private:
+public:
     vector<Room*> roomList;
     vector<vector<Room*>> gridMap;  //2D Grid of Rooms
     map<Room*, vector<Room*>> adjDict;  // Mapping from Room* -> Adjacent Rooms
@@ -79,7 +79,6 @@ private:
     int rows;
     int cols;
 
-public:
     GameMap(string filename);
     ~GameMap();
     bool inBounds(Coords coords);
