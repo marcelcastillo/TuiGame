@@ -37,7 +37,10 @@ int main()
     }
     /* Initialize game map */
     cout << "Reading from " << mapfile << endl;
-    GameMap* map = new GameMap(mapfile);
+    GameMap* map = new GameMap();
+    SysEvents* eventSys = new SysEvents();
+    init(mapfile, map, eventSys);
+    // eventSys->printEvents(); 
     // map.displayAllRooms();
 
     /* Initialize Player & Movement System */
@@ -72,6 +75,7 @@ int main()
     /* Main Game Loop */
     while (true)
     {
+        eventSys->processEvents(moveSys);
         moveSys->movePlayer();
     }
     return 0;
