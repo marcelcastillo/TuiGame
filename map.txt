@@ -4,8 +4,47 @@ START 2 1
 ROOM 2 1 Cryo_Bay
 DESC You awaken in a dim cryo bay. Frost clings to the sleeping pods.
 
-ROOM 1 1 Central_Corridor
-DESC A narrow corridor runs through the ship, lit by flickering emergency lights.
+EVNT 1 Cryopod_Initialization
+PREQ
+TASK Welcome back, Captain. I am Co-Pilot, your assigned onboard AI system for the ISV Athena. My programming is designed to monitor and maintain ship functionality, mission progress, and crew wellbeing. You are currently assigned to Athena Expedition-07, part of the Hestia Project. This expedition is one of multiple concurrent missions under the Hestia Project. I will assist you with task management, hazard alerts, and system updates. How may I assist you?
+CHOI What is the Athena Expedition?
+RESP You are on Mission Day 452 of the Athena Expedition-07. Your objective is to travel to Planet Eos (HX-317b) and evaluate its potential for human colonization. Earth can no longer sustain current population demands. The Hestia Project was established to identify viable alternatives for human settlement. Preliminary data indicates that Planet Eos may support human life. Your role is to confirm these findings through direct observation.
+CHOI No questions. Proceed to daily tasks.
+RESP Understood. Proceeding to mission briefing.
+ANSW 1
+
+TASK Do you require any additional clarification?
+CHOI What should I be doing right now?
+RESP Your current schedule includes standard daily operations. Recommended tasks include system diagnostics, mission log review, and routine health monitoring.
+CHOI No further questions.
+RESP Understood. Proceeding to daily operations.
+ANSW 1
+
+TASK Understood. Initiating standard daily operations. Loading tasks... The following tasks are scheduled for this cycle: System diagnostics. Mission log review and upload. Routine health check.
+CHOI Acknowledge assigned tasks.
+RESP Daily task list confirmed.
+ANSW 0
+
+EVNT 2 System_Diagnostics
+PREQ 1
+TASK Diagnostic task placeholder.
+CHOI Begin diagnostics.
+RESP Diagnostic systems initializing.
+ANSW 0
+
+EVNT 3 Mission_Log_Review
+PREQ 1
+TASK Mission log task placeholder.
+CHOI Open mission log.
+RESP Accessing mission records.
+ANSW 0
+
+EVNT 4 Routine_Health_Check
+PREQ 1
+TASK Health check task placeholder.
+CHOI Begin health check.
+RESP Preparing health check protocol. Now that you have completed these items, you notice that the door to the Cargo Room has been left open.
+ANSW 0
 
 ROOM 0 1 Bridge
 DESC Dead control panels line the bridge, and stars shine through the forward viewport.
