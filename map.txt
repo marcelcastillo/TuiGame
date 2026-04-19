@@ -3,6 +3,7 @@ START 2 1
 
 ROOM 2 1 Cryo_Bay
 DESC You awaken in a dim cryo bay. Frost clings to the sleeping pods.
+ACCS true
 
 EVNT 1 Cryopod_Initialization
 PREQ
@@ -25,15 +26,17 @@ CHOI Acknowledge assigned tasks.
 RESP Daily task list confirmed.
 ANSW 0
 
+RWRD Command_Keycard Captain_Access_Card 1
+
 EVNT 2 System_Diagnostics
-PREQ 1
+PREQ 4
 TASK Diagnostic task placeholder.
 CHOI Begin diagnostics.
 RESP Diagnostic systems initializing.
 ANSW 0
 
 EVNT 3 Mission_Log_Review
-PREQ 1
+PREQ 4
 TASK Mission log task placeholder.
 CHOI Open mission log.
 RESP Accessing mission records.
@@ -47,16 +50,25 @@ RESP Preparing health check protocol. Now that you have completed these items, y
 ANSW 0
 
 ROOM 0 1 Bridge
+ACCS true
 DESC Dead control panels line the bridge, and stars shine through the forward viewport.
 
+ROOM 1 1 Central_Corridor
+ACCS true
+DESC The central corridor is eerily quiet, its flickering lights casting long shadows across the walls as sealed doors line the passage in silence.
+
 ROOM 1 0 Engine_Room
+ACCS true
 DESC The reactor chamber vibrates with a deep metallic hum.
 
 ROOM 1 2 Med_Bay
+ACCS true
 DESC Medical cabinets hang open and overturned carts drift slightly in low gravity.
 
 ROOM 2 2 Cargo_Hold
+ACCS true
 DESC Cargo containers are strapped to the deck, though some have broken loose.
 
 ROOM 2 3 Airlock
+ACCS false
 DESC A thick outer hatch stands beside a rack of emergency suits.

@@ -16,27 +16,39 @@ void SysMovement::movePlayer()
     int count;
     bool proceed = false;
     vector<Room*> adjRooms;
+    vector<Room*> accRooms;
     ostringstream ostream;
 
     ostream << "From the " << currRoom->getName() << ", it appears the following rooms are accessible.";
     slowPrint(ostream);
 
+    /* From the list of adjacent rooms, provide only the ones accessible to player */
     adjRooms = mapPtr->getAdjList(currRoom);
-    mapPtr->displayAdjRooms(currRoom);
+    for (Room* possRoom : adjRooms)
+    {
+        if (possRoom->accessible)
+            accRooms.push_back(possRoom);
+    }
+    mapPtr->displayAdjRooms(adjRooms);
 
     while (!proceed)
     {   
-        ostringstream ostream;
-        ostream << "Which room would you like to travel to?: ";
-        slowPrint(ostream);
+        slowPrint("Which room would you like to travel to?: ");
         cin >> choice;
 
         if (choice > adjRooms.size())
         {
-            cout << "Invalid option." << endl;
+            slowPrint("Invalid option.");
             continue;
         }
-
+        Room* selectedRoom = adjRooms[choice - 1];
+        /* If selectedRoom not in accRooms */
+        auto iter = find(accRooms.begin(), accRooms.end(), selectedRoom);
+        if (iter == accRooms.end())
+        {
+            slowPrint("Hmm, it seems this room is locked.");
+            continue;
+        }
         currRoom = adjRooms[choice - 1];
         proceed = true;
     }
@@ -96,11 +108,9 @@ void SysEvents::processEvents(SysMovement* moveSys)
         }
         if (start)
         {
-            event->startEvent();
+            event->startEvent(moveSys->player);
         }
-
     }
-
 }
 
 void SysEvents::printEvents()
@@ -183,6 +193,10 @@ void init(string filename, GameMap* map, SysEvents* eventSys)
             getline(lineStream >> std::ws, desc);   // Discard leading whitespace
             currRoom->setDescription(desc);
         }
+        else if (keyword == "ACCS")
+        {
+            lineStream >> std::boolalpha >> currRoom->accessible;
+        }
         else if (keyword == "EVNT")
         {
             currEvent = new Event(); 
@@ -226,6 +240,20 @@ void init(string filename, GameMap* map, SysEvents* eventSys)
             lineStream >> currTask->answer;
             eventSys->eventList.push_back(currEvent);
             eventSys->eventMap[currRoom].push_back(currEvent);
+        }
+        else if (keyword == "RWRD")
+        {   
+            /* Read reward and push into player's inventory */
+            string itemName, itemDesc;
+            int itemWeight;
+            lineStream >> itemName >> itemDesc >> itemWeight;
+            for (char& ch : itemName) 
+                if (ch == '_') ch = ' ';   
+            for (char& ch : itemDesc) 
+                if (ch == '_') ch = ' ';                  
+            Item* item = new Item(itemName, itemDesc, itemWeight);
+            currEvent->reward = item;
+
         }
     }
     /* Populate the Event's preReq vector */

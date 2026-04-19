@@ -27,8 +27,13 @@ void Entity::display() const
 /* Player Method Definitions */
 Player::Player(const string& name, const string& description) : Entity(name, description)
 {
-    Entity* crowbar = new Entity("crowbar", "Pry things open!");
+    Item* crowbar = new Item("crowbar", "Pry things open!", 1);
     inventory.push_back(crowbar);
+}
+
+Item::Item(const string& name, const string& description, int wt) : Entity(name, description)
+{
+    weight = wt;
 }
 
 /***************************/
@@ -151,10 +156,10 @@ Room* GameMap::getStart() const
     return gridMap[startLoc.gridRow][startLoc.gridCol];
 }
 
-void GameMap::displayAdjRooms(Room* currRoom)
+void GameMap::displayAdjRooms(vector<Room*> accessibleRooms)
 {   
     int count = 0;
-    for (Room* adjRoom : adjList[currRoom])
+    for (Room* adjRoom : accessibleRooms)
     {
         cout << "   " << count + 1 << ": " << adjRoom->getName() << endl;
         count++;

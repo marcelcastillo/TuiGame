@@ -25,8 +25,9 @@ public:
     vector<int> preReqsIds;     // List of event IDs required to be completed before this event
     vector<Event*> preReqs;     // List of Pre Req Event Pts
     bool complete;              // Has the event been completed or not
+    Item* reward;               // Reward for completing the event
     Event();
-    void startEvent();
+    void startEvent(Player*);
     void printEvent();
 };
 

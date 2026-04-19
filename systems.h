@@ -19,9 +19,9 @@ class SysMovement
 {
 private:
     GameMap* mapPtr;
-    Player* player;
     Room* currRoom;
 public:
+    Player* player;
     SysMovement(GameMap*, Player*);
     void movePlayer();
     void announce() const;

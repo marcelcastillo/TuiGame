@@ -27,9 +27,10 @@ Event::Event()
     room = nullptr;
     preReqs = {};
     complete = false;
+    reward = nullptr;
 }
 
-void Event::startEvent()
+void Event::startEvent(Player* player)
 {
     for (Task* task : taskList)
     {
@@ -66,12 +67,22 @@ void Event::startEvent()
         }
     }
     complete = true;
+    /* If event had an associated reward, reward it to the player */
+    if (reward != nullptr)
+    {
+        player->inventory.push_back(reward);
+        ostringstream ostream;
+        ostream << "You received: " << reward->getName();
+        slowPrint(ostream);
+    }
+
+
 }
 void Event::printEvent()
 {
     cout << "EVNT " << id << " " << name << endl;
 
-    // Preconditions
+    // Precondition Events
     cout << "  PREQ: ";
     for (int req : preReqsIds)
     {

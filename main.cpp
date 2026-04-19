@@ -17,16 +17,12 @@ int main()
     while (!proceed)
     {   
         cout << "   Press 1 to start a new game." << endl;
-        cout << "   Press 2 to continue an existing game: ";
+        // cout << "   Press 2 to continue an existing game: ";
         cin >> choice;
 
         switch (choice)
         {
             case 1:
-                /* TODO */
-                proceed = true;
-                break;
-            case 2:
                 /* TODO */
                 proceed = true;
                 break;

@@ -13,12 +13,12 @@
 using namespace std;
 
 class Event;
+class Item;
 class Entity
 {
 private:
     string entName;
     string entDesc;
-    bool alive;
 public:
     Entity(const string& name, const string& description);
     const string& getName() const;
@@ -31,9 +31,16 @@ class Player : public Entity
 {
 private:
     health playerHP = 100.0;
-    vector<Entity*> inventory;
+    bool alive;
 public:
+    vector<Item*> inventory;
     Player(const string& name, const string& description);
+};
+
+class Item : public Entity{
+public:
+    int weight;
+    Item(const string& name, const string& description, int wt);
 };
 
 class Enemy : public Entity
@@ -59,6 +66,7 @@ private:
     Coords coords;
 
 public:
+    bool accessible;
     Room(const string& name, const string& description, int row, int col);
     const string& getName() const;
     const string& getDescription() const;
@@ -88,7 +96,7 @@ public:
     Room* getRoom(Coords) const;
     Room* getRoom(Room*, int);
     Room* getStart() const;
-    void displayAdjRooms(Room*);
+    void displayAdjRooms(vector<Room*> accessibleRooms);
     void displayAllRooms();
 };
 
