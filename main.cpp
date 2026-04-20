@@ -12,7 +12,8 @@ int main()
     bool proceed = false;
     int choice;
 
-    cout << "Welcome to Tork!" << endl;
+    printASCII('*', "logo.txt");
+    cout << endl << "Welcome to Tork!" << endl;
 
     while (!proceed)
     {   

@@ -21,7 +21,7 @@ CHOI No further questions.
 RESP Understood. Proceeding to daily operations.
 ANSW 1
 
-TASK Understood. Initiating standard daily operations. Loading tasks... The following tasks are scheduled for this cycle: System diagnostics. Mission log review and upload. Routine health check.
+TASK Initiating standard daily operations. Loading tasks... The following tasks are scheduled for this cycle: System diagnostics. Mission log review and upload. Routine health check.
 CHOI Acknowledge assigned tasks.
 RESP Daily task list confirmed.
 ANSW 0
@@ -29,24 +29,66 @@ ANSW 0
 RWRD Command_Keycard Captain_Access_Card 1
 
 EVNT 2 System_Diagnostics
-PREQ 4
-TASK Diagnostic task placeholder.
-CHOI Begin diagnostics.
-RESP Diagnostic systems initializing.
+PREQ 1
+TASK You approach the nearest diagnostic terminal. The screen flickers to life, displaying fragmented system data. Several subsystems are reporting irregularities, but the logs appear partially corrupted. Co-Pilot speaks: “Captain, multiple ship systems are operating outside normal parameters. Manual verification is recommended. Which system would you like to inspect first?”
+CHOI Check propulsion systems.
+RESP Propulsion systems nominal. However, fuel efficiency has dropped by 12%. Cause unknown.
+CHOI Check life support systems.
+RESP Life support stable. Oxygen levels within acceptable range, though minor fluctuations detected.
+ANSW 1
+
+TASK As you continue reviewing the diagnostics, a hidden log file appears flagged for urgent review. It is timestamped several weeks prior, but you do not recall authorizing its creation.
+CHOI Open the flagged log file.
+RESP Accessing log… Warning: File integrity compromised. Partial reconstruction complete. Contents suggest anomalous sensor readings near Planet Eos prior to your arrival.
+CHOI Ignore the log and continue diagnostics.
+RESP Log file archived. Continuing system diagnostics.
+ANSW 1
+
+TASK The diagnostic terminal finishes its scan. A final message appears: “Unknown anomaly detected in external sensor array. Further investigation required.” Co-Pilot pauses briefly before speaking again: “Captain, this anomaly does not match any known system fault.”
+CHOI Acknowledge anomaly.
+RESP Anomaly recorded in mission log for further investigation.
 ANSW 0
 
 EVNT 3 Mission_Log_Review
-PREQ 4
-TASK Mission log task placeholder.
-CHOI Open mission log.
-RESP Accessing mission records.
+PREQ 1
+TASK You access the ship’s mission logs. The interface loads slowly, as if retrieving data from a degraded storage system. Co-Pilot states: “Mission logs have been partially reconstructed. Some entries may be incomplete or altered.”
+CHOI Review recent logs.
+RESP Displaying logs from the past 30 days… Several entries appear to be missing or overwritten.
+CHOI Search for anomalies.
+RESP Searching logs for irregular patterns… Multiple inconsistencies detected in recorded sensor data.
+ANSW 1
+
+TASK A specific log entry catches your attention. It describes a previous scan of Planet Eos, but the data conflicts with the current mission briefing.
+CHOI Read the conflicting log entry.
+RESP Log entry indicates that Planet Eos exhibited unstable atmospheric readings and unclassified energy signatures. This contradicts current mission parameters.
+CHOI Dismiss the inconsistency.
+RESP Log flagged but no further action taken.
+ANSW 1
+
+TASK As you finish reviewing the logs, Co-Pilot interjects: “Captain, it is possible that earlier findings were suppressed or altered. Recommend maintaining caution during planetary approach.”
+CHOI Acknowledge warning.
+RESP Warning logged. Mission parameters remain unchanged.
 ANSW 0
 
 EVNT 4 Routine_Health_Check
 PREQ 1
-TASK Health check task placeholder.
-CHOI Begin health check.
-RESP Preparing health check protocol. Now that you have completed these items, you notice that the door to the Cargo Room has been left open.
+TASK You initiate the routine health check at the medical station. The system activates, scanning your vitals and neural activity. Co-Pilot speaks: “Beginning full diagnostic of crew status. Please remain still.”
+CHOI Comply with the scan.
+RESP Scanning… Vital signs within acceptable range. Minor signs of fatigue detected.
+CHOI Interrupt the scan.
+RESP Scan incomplete. Results may be inaccurate.
+ANSW 1
+
+TASK The system begins a deeper neurological scan. For a brief moment, the display glitches, showing unfamiliar data patterns before returning to normal.
+CHOI Ask Co-Pilot about the anomaly.
+RESP “Irregularity detected. Cause unknown. Possible sensor error.”
+CHOI Ignore the anomaly.
+RESP Continuing standard health assessment.
+ANSW 1
+
+TASK The scan completes, but Co-Pilot hesitates before delivering the final report. “Captain… all readings appear nominal. However, I recommend increased monitoring moving forward.” As the system powers down, you notice the nearby door to the Cargo Hold has unlocked.
+CHOI Acknowledge results.
+RESP Health check complete. Cargo Hold access now available.
 ANSW 0
 
 ROOM 0 1 Bridge

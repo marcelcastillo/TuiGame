@@ -46,7 +46,7 @@ void SysMovement::movePlayer()
         auto iter = find(accRooms.begin(), accRooms.end(), selectedRoom);
         if (iter == accRooms.end())
         {
-            slowPrint("Hmm, it seems this room is locked.");
+            slowPrint("Hmm, it seems this room is locked...");
             continue;
         }
         currRoom = adjRooms[choice - 1];
@@ -56,10 +56,9 @@ void SysMovement::movePlayer()
 }
 void SysMovement::announce() const
 {
-    ostringstream ostream;
-    ostream << currRoom->getDescription();
-    slowPrint(ostream);
+    slowPrint(currRoom->getDescription());
 }
+
 Room* SysMovement::getCurrRoom()
 {
     return currRoom;
@@ -272,4 +271,54 @@ void init(string filename, GameMap* map, SysEvents* eventSys)
         map->adjDict[room] = adj;
     }
 }
+// @brief Outputs a border from the user's requested border character
+// @param border    User's requested border char
+// @param size      Number of times to print the border char
+void printHeaderFooter(char border, int size)
+{
+    for (int i = 0; i < size; i++){
+        cout << border;
+    }
+    cout << endl;
+    return;
+}
 
+/* Pretty Printing ASCII*/
+// @brief Outputs the requested painting to standard out
+// @param border    User's requested border char
+// @param filename  The textfile storing the ASCII art
+void printASCII(char border, string filename)
+{
+    string line;
+    string artImage;
+    int size = 0;
+    ifstream inStream(filename);
+    ostringstream cout_Art;
+
+    if (inStream.is_open()){
+        while (getline(inStream, line)){
+            if (line.size() > size){
+                size = line.size();
+            }
+            // Remove carriage return characters
+            if (!line.empty() && line.back() == '\r'){
+                line.pop_back();
+            }
+            cout_Art << line << endl;
+        }
+    } else {
+        cout << "Sorry, " << filename << " could not be opened." << endl;
+    }
+
+    inStream.close();
+    artImage = cout_Art.str();
+    istringstream cin_Art(artImage);
+
+    // Print the ASCII Art
+    printHeaderFooter(border, size + 2);
+    while (getline(cin_Art, line)){
+        cout << border << line << string(size - line.size(), ' ') << border << endl;
+    }
+    printHeaderFooter(border, size + 2);
+    return;
+}

@@ -43,5 +43,7 @@ public:
 void slowPrint(const ostringstream& stream, int delay_ms = DELAY);
 void slowPrint(const string& text, int delay_ms = DELAY);
 void init(string filename, GameMap* map, SysEvents* eventSys);
+void printHeaderFooter(char border, int size);
+void printASCII(char border, string filename);
 
 #endif
