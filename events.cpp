@@ -35,17 +35,20 @@ void Event::startEvent(Player* player)
     for (Task* task : taskList)
     {
         /* Print the Task Prompt */
-        ostringstream ostream;
+        /*ostringstream ostream;
         ostream << task->prompt << endl;
-        slowPrint(ostream);
+        slowPrint(ostream);*/
+        printCopilotText(task->prompt);
+
         /* Print the prompt options */
         while (true)
         {
             for (int i = 0; i < task->choices.size(); i++)
             {
-                ostringstream ostream;
+                /*ostringstream ostream;
                 ostream << i + 1 << ". " << task->choices[i].first;
-                slowPrint(ostream, 10);
+                slowPrint(ostream, 10);*/
+                printChoiceText(i + 1, task->choices[i].first);
             }
             int playerResp;
             cin >> playerResp;
@@ -57,9 +60,11 @@ void Event::startEvent(Player* player)
                 continue;
             }
             /* Reply with the Reponse to that choice */
-            ostringstream ostream;
+            /*ostringstream ostream;
             ostream << task->choices[playerResp-1].second << endl; 
-            slowPrint(ostream, 10);  
+            slowPrint(ostream, 10);  */
+            printCopilotText(task->choices[playerResp - 1].second);
+
             if (playerResp - 1 == task->answer)
             {
                 break;

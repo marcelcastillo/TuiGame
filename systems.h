@@ -5,6 +5,7 @@
 
 #include <thread>
 #include <chrono>
+#include <algorithm>
 
 #include "entities.h"
 #include "events.h"
@@ -42,6 +43,9 @@ public:
 
 void slowPrint(const ostringstream& stream, int delay_ms = DELAY);
 void slowPrint(const string& text, int delay_ms = DELAY);
+void printLocationText(const string& text);
+void printCopilotText(const string& text);
+void printChoiceText(int number, const string& text);
 void init(string filename, GameMap* map, SysEvents* eventSys);
 void printHeaderFooter(char border, int size);
 void printASCII(char border, string filename);
