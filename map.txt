@@ -7,7 +7,7 @@ ACCS true
 
 EVNT 1 Cryopod_Initialization
 PREQ
-TASK Welcome back, Captain. I am Co-Pilot, your assigned onboard AI system for the ISV Athena. My programming is designed to monitor and maintain ship functionality, mission progress, and crew wellbeing. You are currently assigned to Athena Expedition-07, part of the Hestia Project. This expedition is one of multiple concurrent missions under the Hestia Project. I will assist you with task management, hazard alerts, and system updates. How may I assist you?
+TASK Welcome back, Captain. I am Co-Pilot, your assigned onboard AI system for the ISV Athena. My programming is designed to monitor and maintain ship functionality, mission progress, and crew wellbeing. You are currently assigned to Athena Expedition-07, part of the Hestia Project. This expedition is one of multiple concurrent missions under the Hestia Project. I will assist you with task management, hazard alerts, and system updates. \nHow may I assist you?
 CHOI What is the Athena Expedition?
 RESP You are assigned to Athena Expedition-07, part of the Hestia Project—humanity’s final effort to identify viable worlds for colonization following Earth’s environmental collapse. The ISV Athena is tasked with surveying Planet Eos (HX-317b), a candidate world believed to support human life. You are currently on Mission Day 452. Your role as Captain is to confirm planetary habitability through direct observation and authorize colonization protocols if conditions are met. Be advised: previous expeditions have reported inconsistencies with preliminary scan data. All findings must be verified upon arrival. The success of this mission may determine the future of human civilization.
 CHOI No questions. Proceed with the mission brief.
@@ -21,7 +21,7 @@ CHOI No further questions.
 RESP Understood. Proceeding to daily operations.
 ANSW 1
 
-TASK Initiating standard daily operations. Loading tasks... The following tasks are scheduled for this cycle: System diagnostics. Mission log review and upload. Routine health check.
+TASK Initiating standard daily operations. \n\nLoading tasks... \n\nThe following tasks are scheduled for this cycle: \nSystem diagnostics. \nMission log review and upload. \nRoutine health check.
 CHOI Acknowledge assigned tasks.
 RESP Daily task list confirmed.
 ANSW 0

@@ -41,6 +41,7 @@ public:
     void printEvents();
 };
 
+string processNewlines(string text);
 void slowPrint(const ostringstream& stream, int delay_ms = DELAY);
 void slowPrint(const string& text, int delay_ms = DELAY);
 void printLocationText(const string& text);

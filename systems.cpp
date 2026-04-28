@@ -120,6 +120,14 @@ void SysEvents::printEvents()
     }  
 }
 
+string processNewlines(string text){
+    size_t pos = 0;
+    while ((pos = text.find("\\n", pos)) != string::npos){
+        text.replace(pos, 2, "\n");
+        pos += 1;
+    }
+    return text;
+}
 
 /* Slowprint Function */
 void slowPrint(const string& text, int delay_ms)
@@ -144,11 +152,11 @@ const string DIM = "\033[2m";
 const string GREEN = "\033[0;38;5;10m";
 
 void printLocationText(const string& text) {
-    slowPrint(DIM + ITALIC + text + RESET);
+    slowPrint(DIM + ITALIC + processNewlines(text)+ RESET);
 }
 void printCopilotText(const string& text){
     string prefix = "[Co-Pilot] > ";
-    slowPrint(GREEN + prefix + text + RESET, 15); //slightly slower slowprint
+    slowPrint(GREEN + prefix + processNewlines(text) + RESET, 20); //slightly slower slowprint
 }
 void printChoiceText(int number, const string& text){
     cout << number << ". " << text << endl;

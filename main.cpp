@@ -4,6 +4,7 @@
 #include "systems.h"
 
 using namespace std;
+string playerName;
 
 int main()
 {
@@ -43,7 +44,6 @@ int main()
     /* Initialize Player & Movement System */
     char choice2;
     proceed = false;
-    string playerName;
 
     while (!proceed)
     {
