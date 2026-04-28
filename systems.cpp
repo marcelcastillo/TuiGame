@@ -56,7 +56,7 @@ void SysMovement::movePlayer()
 }
 void SysMovement::announce() const
 {
-    slowPrint(currRoom->getDescription());
+    printLocationText(currRoom->getDescription());
 }
 
 Room* SysMovement::getCurrRoom()
@@ -137,7 +137,22 @@ void slowPrint(const ostringstream& stream, int delay_ms)
     slowPrint(stream.str(), delay_ms);
 }
 
+/* Colorprint Functions */
+const string RESET = "\033[0m";
+const string ITALIC = "\033[3m";
+const string DIM = "\033[2m";
+const string GREEN = "\033[0;38;5;10m";
 
+void printLocationText(const string& text) {
+    slowPrint(DIM + ITALIC + text + RESET);
+}
+void printCopilotText(const string& text){
+    string prefix = "[Co-Pilot] > ";
+    slowPrint(GREEN + prefix + text + RESET, 15); //slightly slower slowprint
+}
+void printChoiceText(int number, const string& text){
+    cout << number << ". " << text << endl;
+}
 
 //@brief Initialization function.
 // Reads the filename and populates the game map and event list
