@@ -30,9 +30,9 @@ Event::Event()
     reward = nullptr;
 }
 
-void Event::startEvent(Player* player)
+void Event::startEvent(Player *player)
 {
-    for (Task* task : taskList)
+    for (Task *task : taskList)
     {
         /* Print the Task Prompt */
         printCopilotText(task->prompt);
@@ -44,20 +44,40 @@ void Event::startEvent(Player* player)
             {
                 printChoiceText(i + 1, task->choices[i].first);
             }
-            int playerResp;
-            //cin >> playerResp;
+
+            extern string playerName;
             string input;
             cin >> input;
 
             /* Function to exit game */
-            if(input == "exit" || input == "Exit" || input == "EXIT") {
-                printCopilotText("Emergency session transmission requested.");
-                printCopilotText("Logging final ship status...");
-                printLocationText("The terminal fades to black.\nThe ship drifts off silently into the void of space.");
-                exit(0);
+            if (input == "exit" || input == "Exit" || input == "EXIT")
+            {
+                string confirm;
+                printCopilotText("Termination command detected.\nDo you wish to proceed? (y/n)");
+                cin >> confirm;
+
+                if (confirm == "y" || confirm == "Y")
+                {
+                    printCopilotText("Termination command accepted.");
+                    printCopilotText("Initiating system hibernation sequence...");
+                    printLocationText("The lights dim across the ship.\nDisplays flicker and power down one by one.\nA low hum settles into stillness.");
+                    printCopilotText("All non-essential systems offline.");
+                    printCopilotText("Goodbye, Captain " + playerName + ".");
+                    printCopilotText("Connection lost...");
+                    exit(0);
+                }
+                else
+                {
+                    printCopilotText("Termination cancelled. Resuming operations.");
+                    continue;
+                }
             }
+
             /* Catches incorrect string input */
-            try {
+            int playerResp;
+
+            try
+            {
                 playerResp = stoi(input);
             }
             catch (...)
@@ -91,8 +111,6 @@ void Event::startEvent(Player* player)
         ostream << "You received: " << reward->getName();
         slowPrint(ostream);
     }
-
-
 }
 void Event::printEvent()
 {
