@@ -35,9 +35,6 @@ void Event::startEvent(Player* player)
     for (Task* task : taskList)
     {
         /* Print the Task Prompt */
-        /*ostringstream ostream;
-        ostream << task->prompt << endl;
-        slowPrint(ostream);*/
         printCopilotText(task->prompt);
 
         /* Print the prompt options */
@@ -45,13 +42,30 @@ void Event::startEvent(Player* player)
         {
             for (int i = 0; i < task->choices.size(); i++)
             {
-                /*ostringstream ostream;
-                ostream << i + 1 << ". " << task->choices[i].first;
-                slowPrint(ostream, 10);*/
                 printChoiceText(i + 1, task->choices[i].first);
             }
             int playerResp;
-            cin >> playerResp;
+            //cin >> playerResp;
+            string input;
+            cin >> input;
+
+            /* Function to exit game */
+            if(input == "exit" || input == "Exit" || input == "EXIT") {
+                printCopilotText("Emergency session transmission requested.");
+                printCopilotText("Logging final ship status...");
+                printLocationText("The terminal fades to black.\nThe ship drifts off silently into the void of space.");
+                exit(0);
+            }
+            /* Catches incorrect string input */
+            try {
+                playerResp = stoi(input);
+            }
+            catch (...)
+            {
+                slowPrint("Invalid input. Please enter a number or type exit to exit the game.\n", 10);
+                continue;
+            }
+
             // cout << "[DEBUG] playerResp=" << playerResp
             //     << ", answer=" << task->answer << endl;
             if (playerResp < 1 || playerResp > task->choices.size())
@@ -60,9 +74,6 @@ void Event::startEvent(Player* player)
                 continue;
             }
             /* Reply with the Reponse to that choice */
-            /*ostringstream ostream;
-            ostream << task->choices[playerResp-1].second << endl; 
-            slowPrint(ostream, 10);  */
             printCopilotText(task->choices[playerResp - 1].second);
 
             if (playerResp - 1 == task->answer)
