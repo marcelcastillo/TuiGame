@@ -55,7 +55,7 @@ int main()
         switch (choice2)
         {
             case 'y':
-                cout << "\nWelcome aboard the USS Athena, " << playerName << "!\n" << endl;
+                cout << "\nWelcome aboard the ISV Athena, " << playerName << "!\n" << endl;
                 proceed = true;
                 break;
             case 'n':
@@ -66,7 +66,7 @@ int main()
         }
 
     }
-    Player* player = new Player(playerName, "Voyager on the USS Artemis.");
+    Player* player = new Player(playerName, "Voyager on the ISV Artemis.");
     SysMovement* moveSys = new SysMovement(map, player);
 
     /* Main Game Loop */
