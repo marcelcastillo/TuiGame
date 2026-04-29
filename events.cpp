@@ -3,6 +3,7 @@
 Task::Task()
 {
     prompt = "";
+    narration = "";
     choices.clear();
     answer = -1;
 }
@@ -35,6 +36,11 @@ void Event::startEvent(Player *player)
     for (Task *task : taskList)
     {
         /* Print the Task Prompt */
+        if (!task->narration.empty())
+        {
+            printLocationText(task->narration);
+        }
+        
         printCopilotText(task->prompt);
 
         /* Print the prompt options */
@@ -63,7 +69,7 @@ void Event::startEvent(Player *player)
                     printLocationText("The lights dim across the ship.\nDisplays flicker and power down one by one.\nA low hum settles into stillness.");
                     printCopilotText("All non-essential systems offline.");
                     printCopilotText("Goodbye, Captain " + playerName + ".");
-                    printCopilotText("Connection lost...");
+                    printCopilotText("Shutting down...");
                     exit(0);
                 }
                 else

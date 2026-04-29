@@ -55,7 +55,7 @@ int main()
         switch (choice2)
         {
             case 'y':
-                cout << "Welcome aboard the USS Athena, " << playerName << "!" << endl;
+                cout << "\nWelcome aboard the USS Athena, " << playerName << "!\n" << endl;
                 proceed = true;
                 break;
             case 'n':

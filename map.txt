@@ -2,93 +2,110 @@ SIZE 4 4
 START 2 1
 
 ROOM 2 1 Cryo_Bay
-DESC You awaken in a dim cryo bay. Frost clings to the sleeping pods.
+DESC Empty cryo-pods line the walls, their glass domes fogged with frost.\nThe pod you woke from sits open against the wall, still beeping softly.
 ACCS true
 
-EVNT 1 Cryopod_Initialization
+EVNT 0 Intro_Sequence
 PREQ
-TASK Welcome back, Captain. I am Co-Pilot, your assigned onboard AI system for the ISV Athena. My programming is designed to monitor and maintain ship functionality, mission progress, and crew wellbeing. You are currently assigned to Athena Expedition-07, part of the Hestia Project. This expedition is one of multiple concurrent missions under the Hestia Project. I will assist you with task management, hazard alerts, and system updates. \nHow may I assist you?
-CHOI What is the Athena Expedition?
-RESP You are assigned to Athena Expedition-07, part of the Hestia Project—humanity’s final effort to identify viable worlds for colonization following Earth’s environmental collapse. The ISV Athena is tasked with surveying Planet Eos (HX-317b), a candidate world believed to support human life. You are currently on Mission Day 452. Your role as Captain is to confirm planetary habitability through direct observation and authorize colonization protocols if conditions are met. Be advised: previous expeditions have reported inconsistencies with preliminary scan data. All findings must be verified upon arrival. The success of this mission may determine the future of human civilization.
-CHOI No questions. Proceed with the mission brief.
+TASK Initializing interface...
+NARR Waking up feels like swimming through concrete. Your limbs are heavy, and your thoughts lag. As your mind clears, a few things stand out: your bed feels unfamiliar, there's a faint beeping to your left, and the air is colder than it should be.\n\nYou open your eyes.\n\nYou're lying in a sleek bed beneath a curved glass dome. It takes a moment, but recognition clicks into place. A cryo-pod. The realization comes without panic, like it's something you already knew. Then another thought hits.\nYou remember your name... and nothing else.\n\nBefore you can process that, the glass above you hisses and lifts. Cool air rushes in as the pod opens. You sit up and look around. The room resembles a high-tech medical bay. It's clean, quiet, and unfamiliar. A dark screen sits nearby. With nothing else to go on, you reach out and tap it. The display flickers on.
+CHOI Continue?
+RESP System initialization complete.\n
+ANSW 0
+
+EVNT 1 Cryopod_Initialization
+PREQ 0
+TASK I am Co-Pilot, your assigned onboard AI system for the ISV Athena. My programming is designed to monitor and maintain ship functionality, mission progress, and crew wellbeing. \n\nYou are currently assigned to Athena Expedition-07, part of the Hestia Project. This expedition is one of multiple concurrent missions under the Hestia Project. \n\nI will assist you with task management, hazard alerts, and system updates. \n\nHow may I assist you?
+CHOI What is the Hestia Project?
+RESP The Hestia Project was established to identify viable alternatives for human settlement. Earth can no longer sustain current population demands, this is humanity's final effort to identify viable worlds for colonization before Earth's projected environmental collapse.\n\nThe ISV Athena is tasked with surveying Planet Eos (HX-317b), a candidate world believed to be capable of supporting human life. The goal of this mission is to confirm planetary habitability through direct observation. \n\nThe success of this mission may determine the future of human civilization. \n\nProceed to mission brief?
+CHOI Proceed with the mission brief.
 RESP Understood. Proceeding to mission briefing.
 ANSW 1
 
-TASK You are on Mission Day 452 of the Athena Expedition-07. Your objective is to travel to Planet Eos (HX-317b) and evaluate its potential for human colonization. Earth can no longer sustain current population demands. The Hestia Project was established to identify viable alternatives for human settlement. Preliminary data indicates that Planet Eos may support human life. Your role is to confirm these findings through direct observation. Do you require any additional clarification?
+TASK You are on Mission Day 452 of the Athena Expedition-07.\n\nYour role as Captain is to confirm planetary habitability through direct observation.\nYour objective is to travel to Planet Eos (HX-317b) and evaluate its potential for human colonization. Preliminary data indicates that Planet Eos may support human life.\n\nBe advised, previous expeditions have reported inconsistencies with preliminary scan data. \n\nDo you require any additional mission clarification?
 CHOI What should I be doing right now?
-RESP Your current schedule includes standard daily operations. Recommended tasks include system diagnostics, mission log review, and routine health monitoring.
-CHOI No further questions.
-RESP Understood. Proceeding to daily operations.
+RESP Your current schedule presently includes standard daily operations. Would you like to view your tasks?
+CHOI View mission tasks.
+RESP Understood. Initiating standard daily operations...
 ANSW 1
 
-TASK Initiating standard daily operations. \n\nLoading tasks... \n\nThe following tasks are scheduled for this cycle: \nSystem diagnostics. \nMission log review and upload. \nRoutine health check.
-CHOI Acknowledge assigned tasks.
-RESP Daily task list confirmed.
+TASK \n\nLoading tasks... \n\nThe following tasks are scheduled for this cycle: \n-System diagnostics. \n-Mission log review and upload. \n-Routine health check.
+CHOI Proceed to first assigned task.
+RESP Confirmed.
 ANSW 0
 
 RWRD Command_Keycard Captain_Access_Card 1
 
 EVNT 2 System_Diagnostics
 PREQ 1
-TASK You approach the nearest diagnostic terminal. The screen flickers to life, displaying fragmented system data. Several subsystems are reporting irregularities, but the logs appear partially corrupted. Co-Pilot speaks: “Captain, multiple ship systems are operating outside normal parameters. Manual verification is recommended. Which system would you like to inspect first?”
+TASK Captain, multiple ship systems are operating outside normal parameters. \nManual verification is recommended. \nWhich system would you like to inspect first?
+NARR You approach the nearest diagnostic terminal. The screen flickers to life, displaying fragmented system data. Several subsystems are reporting irregularities, but the logs appear partially corrupted.
 CHOI Check propulsion systems.
-RESP Propulsion systems nominal. However, fuel efficiency has dropped by 12%. Cause unknown.
+RESP Propulsion systems: Normal \nHowever, fuel efficiency has dropped by 12%. \nCause: Unknown
 CHOI Check life support systems.
-RESP Life support stable. Oxygen levels within acceptable range, though minor fluctuations detected.
+RESP Life support: stable \n\nOxygen levels within acceptable range, though minor fluctuations detected.\n
 ANSW 1
 
-TASK As you continue reviewing the diagnostics, a hidden log file appears flagged for urgent review. It is timestamped several weeks prior, but you do not recall authorizing its creation.
+NARR While you are reviewing the system diagnostics, a hidden log file appears flagged for urgent review.\nThe timestamp is several weeks old.\nYou do not recall authorizing its creation.
+TASK Flagged log file detected.\nAccess recommended.
 CHOI Open the flagged log file.
-RESP Accessing log… Warning: File integrity compromised. Partial reconstruction complete. Contents suggest anomalous sensor readings near Planet Eos prior to your arrival.
+RESP Accessing log...\nWarning. File integrity compromised.\nPartial reconstruction complete.\nAnomalous sensor readings detected near Planet Eos prior to your arrival.
 CHOI Ignore the log and continue diagnostics.
-RESP Log file archived. Continuing system diagnostics.
+RESP Log file archived. \nContinuing system diagnostics.
 ANSW 1
 
-TASK The diagnostic terminal finishes its scan. A final message appears: “Unknown anomaly detected in external sensor array. Further investigation required.” Co-Pilot pauses briefly before speaking again: “Captain, this anomaly does not match any known system fault.”
+TASK Scan complete...\n\nUnknown anomaly detected in external sensor array. Further investigation required. \n\n[Co-Pilot] > Captain, this anomaly does not match any known system fault.
+NARR The diagnostic terminal finishes its scan.
 CHOI Acknowledge anomaly.
 RESP Anomaly recorded in mission log for further investigation.
 ANSW 0
 
 EVNT 3 Mission_Log_Review
 PREQ 1
-TASK You access the ship’s mission logs. The interface loads slowly, as if retrieving data from a degraded storage system. Co-Pilot states: “Mission logs have been partially reconstructed. Some entries may be incomplete or altered.”
+TASK Mission logs have been partially reconstructed. Some entries may be incomplete or altered.
+NARR You access the ship's mission logs. The interface loads slowly, as if retrieving data from a degraded storage system.
 CHOI Review recent logs.
-RESP Displaying logs from the past 30 days… Several entries appear to be missing or overwritten.
+RESP Displaying logs from the past 30 days... Several entries appear to be missing or overwritten.
 CHOI Search for anomalies.
-RESP Searching logs for irregular patterns… Multiple inconsistencies detected in recorded sensor data.
+RESP Searching logs for irregular patterns... Multiple inconsistencies detected in recorded sensor data.
 ANSW 1
 
-TASK A specific log entry catches your attention. It describes a previous scan of Planet Eos, but the data conflicts with the current mission briefing.
+TASK What would you like to do with the file, Captain?
+NARR A specific log entry catches your attention. It describes a previous scan of Planet Eos, but the data conflicts with the current mission briefing.
 CHOI Read the conflicting log entry.
 RESP Log entry indicates that Planet Eos exhibited unstable atmospheric readings and unclassified energy signatures. This contradicts current mission parameters.
 CHOI Dismiss the inconsistency.
 RESP Log flagged but no further action taken.
 ANSW 1
 
-TASK As you finish reviewing the logs, Co-Pilot interjects: “Captain, it is possible that earlier findings were suppressed or altered. Recommend maintaining caution during planetary approach.”
+TASK Captain, it is possible that earlier findings were suppressed or altered.\nI recommend maintaining caution during planetary approach.
+NARR As you finish reviewing the logs, the interface pauses for a moment as Co-Pilot speaks up.
 CHOI Acknowledge warning.
 RESP Warning logged. Mission parameters remain unchanged.
 ANSW 0
 
 EVNT 4 Routine_Health_Check
 PREQ 1
-TASK You initiate the routine health check at the medical station. The system activates, scanning your vitals and neural activity. Co-Pilot speaks: “Beginning full diagnostic of crew status. Please remain still.”
+TASK Beginning full diagnostic of crew status... \n\nPlease remain still.
+NARR You initiate the routine health check at the medical station. \n\nThe system activates, initializing a scan of your vitals and neural activity.
 CHOI Comply with the scan.
-RESP Scanning… Vital signs within acceptable range. Minor signs of fatigue detected.
+RESP Scanning\n.\n.\n.\n\nVital signs within acceptable range. \nMinor signs of fatigue detected.
 CHOI Interrupt the scan.
-RESP Scan incomplete. Results may be inaccurate.
-ANSW 1
+RESP \nScan incomplete. \n\nResults may be inaccurate.
+ANSW 0
 
-TASK The system begins a deeper neurological scan. For a brief moment, the display glitches, showing unfamiliar data patterns before returning to normal.
+TASK Scanning\n.\n.\n.
+NARR The system begins a deeper neurological scan. For a brief moment, the display glitches, showing unfamiliar data patterns before returning to normal.
 CHOI Ask Co-Pilot about the anomaly.
-RESP “Irregularity detected. Cause unknown. Possible sensor error.”
+RESP Irregularity detected. \n\nCause: unknown\n\nPossible sensor error.
 CHOI Ignore the anomaly.
 RESP Continuing standard health assessment.
 ANSW 1
 
-TASK The scan completes, but Co-Pilot hesitates before delivering the final report. “Captain… all readings appear nominal. However, I recommend increased monitoring moving forward.” As the system powers down, you notice the nearby door to the Cargo Hold has unlocked.
+TASK Captain... all readings appear normal. \nHowever, I recommend increased monitoring moving forward.
+NARR As the system powers down, you notice the nearby door to the Cargo Hold has unlocked. The scan completes, but Co-Pilot hesitates before delivering the final report.
 CHOI Acknowledge results.
-RESP Health check complete. Cargo Hold access now available.
+RESP Health check complete. \n\nCargo Hold access now available.
 ANSW 0
 
 ROOM 0 1 Bridge

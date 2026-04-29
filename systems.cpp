@@ -8,7 +8,7 @@ SysMovement::SysMovement(GameMap* gameMap, Player* player)
     mapPtr = gameMap;
     this->player = player;
     currRoom = mapPtr->getStart();
-    announce();
+    //announce();
 }
 void SysMovement::movePlayer()
 {
@@ -108,6 +108,11 @@ void SysEvents::processEvents(SysMovement* moveSys)
         if (start)
         {
             event->startEvent(moveSys->player);
+            
+            if (event->id == 0)
+            {
+                printCopilotText("Welcome back, Captain " + moveSys->player->getName() + ".");
+            }
         }
     }
 }
@@ -240,6 +245,10 @@ void init(string filename, GameMap* map, SysEvents* eventSys)
             currTask = new Task();
             getline(lineStream >> ws, currTask->prompt);
             currEvent->taskList.push_back(currTask);
+        }
+        else if (keyword == "NARR")
+        {
+            getline(lineStream >> ws, currTask->narration);
         }
         else if (keyword == "CHOI")
         {
